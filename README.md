@@ -18,13 +18,11 @@ Therefore, you will always see the same suggestions at the first step. Let's sup
 now the weights will be changed, putting "t" at the first position will be worthless, but t can still be put elsewhere. Similarly, the letters "ble" will be worthless. It would be pointless to put "a" at the the first or second position, because it would provide no extra information at all!
 
 This method is shown to be useful. For example, if you end up with three possible answers: cling, fling, kling, you may need to try three times (if you are unlucky, of course!) to get the right answer! But this program will tell you the following 5 are the best choices: 
-'''
+
+```
 top  1 -> clonk 0.5065
 top  2 -> clink 0.5065
 top  3 -> clank 0.5065
 top  4 -> clunk 0.5065
 top  5 -> clich 0.4985
-'''
-
-
-
+```
