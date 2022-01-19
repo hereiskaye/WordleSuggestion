@@ -26,3 +26,7 @@ top  3 -> clank 0.5065
 top  4 -> clunk 0.5065
 top  5 -> clich 0.4985
 ```
+## Effectiveness 
+
+Using the smaller dictionary [first20hours's repo](https://github.com/first20hours/google-10000-english/blob/master/google-10000-english-usa-no-swears-medium.txt), which contain 1367 5-length words, I can confirm that only 2 words require more than 6 steps. The distribution is shown:
+![Alt text](MeanSteps.png?raw=true "Title")
