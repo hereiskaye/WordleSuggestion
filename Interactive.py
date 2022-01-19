@@ -85,6 +85,7 @@ if __name__ == '__main__':
       for i in range(26):
         for j in range(5):
           self.RawFrequency[i,j] = self.pos[j].count(self.alphabet[i])
+
       return 
 
 
@@ -213,6 +214,7 @@ if __name__ == '__main__':
   while words > 1:
     wordInput = input('Add a word please                     ->')
     color = Question.AddOne(wordInput)
+    ob.AddingAGuess(AGuess=wordInput,AResult=color) 
     print('You get' + ' '*(40-7) + color)
     myWord = ''
     for i in range(5):
@@ -222,6 +224,5 @@ if __name__ == '__main__':
         myWord += ob.known[i]
     print('The word is now' + ' '*25 + myWord)
     print('You may use %s to fill in the blanks' % (','.join(ob.contain)))
-    ob.AddingAGuess(AGuess=wordInput,AResult=color) 
-    words = ob.PossibleWords()
 
+    words = ob.PossibleWords()
