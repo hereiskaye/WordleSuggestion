@@ -84,7 +84,11 @@ if __name__ == '__main__':
       self.RawFrequency = np.zeros((26,5))
       for i in range(26):
         for j in range(5):
-          self.RawFrequency[i,j] = self.pos[j].count(self.alphabet[i])
+          myCount = self.pos[j].count(self.alphabet[i])
+          if myCount == np.size(self.found):
+            self.RawFrequency[i,j] = 0 
+          else:
+            self.RawFrequency[i,j] = myCount
 
       return 
 
@@ -127,6 +131,30 @@ if __name__ == '__main__':
       return 
 
     def PossibleWords(self):
+      # calculate the size of possible dict
+      self.found = []    
+      def Check_Word(word):
+        for eachChar in self.contain:
+          if not eachChar in word:
+            return False 
+        for eachChar in self.notpresent:
+          if eachChar in word:
+            return False 
+        for key in self.known.keys():
+          if len(self.known[key]) >0 and not word[key] == self.known[key]:
+            return False 
+        for key in self.bad.keys():
+          if word[key] in self.bad[key]:
+            return False 
+        return True
+      for word in length_5:
+        if Check_Word(word):
+          self.found.append(word)
+      print('-- there are %5d possible words --' % len(self.found))
+      if len(self.found) < 10:
+        print(' '.join(self.found))
+      self.UpdateFrequency()
+
       # calculate the best word that provide the most info
       self.weightedFrequency = self.RawFrequency*self.weight
       best_word = ''
@@ -155,29 +183,7 @@ if __name__ == '__main__':
       self.bestChoices = sorted_length_5
       self.bestGrades = sorted_grades
 
-      # calculate the size of possible dict
-      self.found = []    
-      def Check_Word(word):
-        for eachChar in self.contain:
-          if not eachChar in word:
-            return False 
-        for eachChar in self.notpresent:
-          if eachChar in word:
-            return False 
-        for key in self.known.keys():
-          if len(self.known[key]) >0 and not word[key] == self.known[key]:
-            return False 
-        for key in self.bad.keys():
-          if word[key] in self.bad[key]:
-            return False 
-        return True
-      for word in length_5:
-        if Check_Word(word):
-          self.found.append(word)
-      print('-- there are %5d possible words --' % len(self.found))
-      if len(self.found) < 5:
-        print(' '.join(self.found))
-      self.UpdateFrequency()
+
       return len(self.found) 
 
   '''
