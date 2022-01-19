@@ -13,6 +13,7 @@ GetYourSolution.py # Give you suggestions based on word inputs and color inputs
 Interactive.py # Generate your own puzzle and play it!
 MeanSteps.py # For calculating the effectiveness
 ```
+For the inputs, please always use lower cases, and for the color inputs, please use G->green (right letter right position), Y->yellow (right letter wrong position) and K->black (wrong letter).
 
 ## Method
 
