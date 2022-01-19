@@ -6,6 +6,14 @@ This project provides you the suggestion to put into the box of wordle puzzle.
 The file words_alpha.txt comes from [dwyl's repo](https://github.com/dwyl/english-words/blob/master/words_alpha.txt).
 It contains 15918 5-length words. 
 
+## Usage
+
+```
+GetYourSolution.py # Give you suggestions based on word inputs and color inputs 
+Interactive.py # Generate your own puzzle and play it!
+MeanSteps.py # For calculating the effectiveness
+```
+
 ## Method
 
 The method is based on ranking all the word with repect to 
@@ -17,7 +25,10 @@ P(first s is green)*4 + P(first s is yellow)*1 + P(second a is green)*4 + P(seco
 Therefore, you will always see the same suggestions at the first step. Let's suppose that you input "table" and get the ”GYKKK" (where K stands for black, G for green and Y for yellow),
 now the weights will be changed, putting "t" at the first position will be worthless, but t can still be put elsewhere. Similarly, the letters "ble" will be worthless. It would be pointless to put "a" at the the first or second position, because it would provide no extra information at all!
 
-This method is shown to be useful. For example, if you end up with three possible answers: cling, fling, kling, you may need to try three times (if you are unlucky, of course!) to get the right answer! But this program will tell you the following 5 are the best choices: 
+
+However, the method tend to overestimate words with repeating letters. To avoid this, I simply deduce 0.5 points from the word everytime a letter repeats. 
+
+Some examples could demonstrate the logic behind this method. For example, if you end up with three possible answers: cling, fling, kling, you may need to try three times (if you are unlucky, of course!) to get the right answer! But this program will tell you the following 5 are the best choices: 
 
 ```
 top  1 -> clonk 0.5065
@@ -28,5 +39,5 @@ top  5 -> clich 0.4985
 ```
 ## Effectiveness 
 
-Using the smaller dictionary [first20hours's repo](https://github.com/first20hours/google-10000-english/blob/master/google-10000-english-usa-no-swears-medium.txt), which contain 1367 5-length words, I can confirm that only 2 words require more than 6 steps. The distribution is shown:
+Using the smaller dictionary [first20hours's repo](https://github.com/first20hours/google-10000-english/blob/master/google-10000-english-usa-no-swears-medium.txt), which contain 1367 5-length words, I can confirm that only no word require more than 6 steps. The distribution is shown:
 ![Alt text](MeanSteps.png?raw=true "Title")

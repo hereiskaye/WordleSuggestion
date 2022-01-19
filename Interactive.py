@@ -4,8 +4,10 @@ import numpy as np
 def load_words():
   with open('words_alpha.txt') as word_file:
     valid_words = set(word_file.read().split())
-
+  with open('google-10000-english-usa-no-swears-medium.txt') as word_file:
+    valid_words = valid_words.union(set(word_file.read().split()))
   return valid_words
+
 
 
 english_words = load_words()
@@ -125,6 +127,10 @@ class GradingSystem(object):
         self.bad[i] += each
     self.contain = ''.join(set(self.contain))
     self.notpresent = ''.join(set(self.notpresent))
+    # when letter repeats, the 'k' might be wrong
+    for eachLetter in self.notpresent:
+      if eachLetter in self.contain:
+        self.notpresent = self.notpresent.replace(eachLetter,'')
     if not self.quiet:
       print('self.contain = %s' % self.contain)
       print('self.notpresent = %s' % self.notpresent)
@@ -182,6 +188,7 @@ class GradingSystem(object):
           print('self.known = %s' % self.known)
           print('self.bad = %s' % self.bad)
         grade += 4.*green + 1.*yellow
+      grade = grade - (5-len(set(word)))*0.5 # deduction 0.5 points for every repeating letter
       # print(word, grade)
       grades.append(grade)
       if grade >= best_grade:
@@ -232,7 +239,7 @@ if __name__ == '__main__':
 
   # now iteration
   words = 10
-  ob = GradingSystem(quiet=True,length_5=length_5)
+  ob = GradingSystem(quiet=False,length_5=length_5)
   words = ob.PossibleWords()
 
   while words > 1:
