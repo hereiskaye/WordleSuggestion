@@ -40,5 +40,8 @@ top  5 -> clich 0.4985
 ```
 ## Effectiveness 
 
-Using the smaller dictionary [first20hours's repo](https://github.com/first20hours/google-10000-english/blob/master/google-10000-english-usa-no-swears-medium.txt), which contain 1367 5-length words, I can confirm that only no word require more than 6 steps. The distribution is shown:
+Using the smaller dictionary [first20hours's repo](https://github.com/first20hours/google-10000-english/blob/master/google-10000-english-usa-no-swears-medium.txt), which contain 1367 5-length words, I can confirm that no word require more than 6 steps. The distribution is shown:
 ![Alt text](MeanSteps.png?raw=true "Title")
+
+However, if I use the larger dictionary [dwyl's repo](https://github.com/dwyl/english-words/blob/master/words_alpha.txt).
+
