@@ -13,6 +13,7 @@ GetYourSolution.py # Give you suggestions based on word inputs and color inputs
 Interactive.py # Generate your own puzzle and play it!
 MeanSteps.py # For calculating the effectiveness
 ```
+For the inputs, please always use lower cases, and for the color inputs, please use G->green (right letter right position), Y->yellow (right letter wrong position) and K->black (wrong letter).
 
 ## Method
 
@@ -39,5 +40,8 @@ top  5 -> clich 0.4985
 ```
 ## Effectiveness 
 
-Using the smaller dictionary [first20hours's repo](https://github.com/first20hours/google-10000-english/blob/master/google-10000-english-usa-no-swears-medium.txt), which contain 1367 5-length words, I can confirm that only no word require more than 6 steps. The distribution is shown:
+Using the smaller dictionary [first20hours's repo](https://github.com/first20hours/google-10000-english/blob/master/google-10000-english-usa-no-swears-medium.txt), which contain 1367 5-length words, I can confirm that no word require more than 6 steps. The distribution is shown:
 ![Alt text](MeanSteps.png?raw=true "Title")
+
+However, if I combine the two dictionaries (i.e. [dwyl's repo](https://github.com/dwyl/english-words/blob/master/words_alpha.txt) and [first20hours's repo](https://github.com/first20hours/google-10000-english/blob/master/google-10000-english-usa-no-swears-medium.txt)), 1.5% of the words require more than 6 steps.
+
