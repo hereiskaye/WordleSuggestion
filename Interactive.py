@@ -21,6 +21,23 @@ for word in english_words:
 length_5 = list(length_5)
 print('In total there are %d words' % (len(length_5)))
 
+# some words are not the solutions to wordle
+length_5.remove('ellis')
+length_5.remove('ellan')
+length_5.remove('euler')
+length_5.remove('lulab')
+length_5.remove('lulav')
+length_5.remove('roter')
+
+length_5.remove('arara') 
+length_5.remove('araru') 
+length_5.remove('araca') 
+length_5.remove('araua') 
+length_5.remove('arain') 
+length_5.remove('whatd') 
+length_5.remove('boily') 
+length_5.remove('bolty') 
+
 
 class GenerateQuestion(object):
   def __init__(self,seed=None,quiet=False,answer='saved',length_5=[]):
@@ -30,22 +47,60 @@ class GenerateQuestion(object):
     else:
       self.answer = answer
     return
-  def AddOne(self,Add):
-    colors = '' 
-    for i,char in enumerate(Add):
+  def AddOne(self,Add,color=True):
+    # e.g. answer == 'snake', Add == 'carss' -> KYKYK
+    #                         Add == 'skksh' -> GYKKK 
+    # find the location of green letters first
+    print('Ans=', self.answer)
+    colors = list('_____')
+    colorsNo = np.zeros(5)
+    AnsDyn = list(self.answer)
+    for i,char in enumerate(Add): 
       if self.answer[i] == char:
-        colors += 'G'
-      elif char in self.answer:
-        colors += 'Y'
-      else:
-        colors += 'K'
+        colors[i] = 'G'
+        colorsNo[i] = 2
+        AnsDyn[i] = '_' # clean it (now) _nake
+    for i,char in enumerate(Add):
+      if colors[i] == '_': # only deal with no-colors 
+        # print(i, char)
+        if char in AnsDyn: # inside _nake or not 
+          AnsDyn[AnsDyn.index(char)] = '_' # remove where it first appears
+          colors[i] = 'Y'
+          colorsNo[i] = 1
+    for i,char in enumerate(Add):
+      if colors[i] == '_': # only deal with no-colors
+        if not char in AnsDyn: 
+          colors[i] = 'K'
     # print(Add)
     # print(colors)
     return colors
 
+
+'''
+Question = GenerateQuestion(answer='snake',seed=None,length_5=length_5)
+for word in ['carss', 'skksh', 'snans', 'snaks']:
+  color = Question.AddOne(word)
+  print(word, color)
+
+print('--'*5)
+Question = GenerateQuestion(answer='sissy',seed=None,length_5=length_5)
+for word in ['carss', 'skksh', 'snans', 'snaks','sskkk','ssskk','ssssk']:
+  color = Question.AddOne(word)
+  print(word, color)
+
+
+exit()
+
 # ob = GenerateQuestion()
 # color = ob.AddOne('table')
- 
+
+class ClassifyInto(object):
+  # classify all the words into few subgroups
+  def __init__(self,quiet=False,seed=1,length_5=[]):
+    self.quiet = quiet
+    self.groups = np.zeros(3**5) # An array containing all
+  def AddAWord(self,word):
+'''
 
 class GradingSystem(object):
   def __init__(self,quiet=False,seed=1,length_5=[]):
@@ -88,8 +143,8 @@ class GradingSystem(object):
       for j in range(5):
         myCount = self.pos[j].count(self.alphabet[i])
         if myCount == np.size(self.found):
-          if not self.quiet:
-            print('I have reset [%s] at [%d] to be zero' % (self.alphabet[i],j))
+          #if not self.quiet:
+          #  print('I have reset [%s] at [%d] to be zero' % (self.alphabet[i],j))
           self.RawFrequency[i,j] = 0 
         else:
           self.RawFrequency[i,j] = myCount
@@ -140,7 +195,9 @@ class GradingSystem(object):
 
   def PossibleWords(self):
     # calculate the size of possible dict
+    self.foundSaved = self.found[:] # save from the last iteration
     self.found = []    
+
     def Check_Word(word):
       for eachChar in self.contain:
         if not eachChar in word:
@@ -155,7 +212,7 @@ class GradingSystem(object):
         if word[key] in self.bad[key]:
           return False 
       return True
-    for word in self.length_5:
+    for word in self.foundSaved:
       if Check_Word(word):
         self.found.append(word)
     if not self.quiet:
@@ -221,7 +278,7 @@ for i in range(6):
 if __name__ == '__main__':
   PickAAnswer = 'bad'
   while not len(PickAAnswer) in [0,5]: 
-    PickAAnswer = input('Would you like to pick a word? If yes, just enter the word, if not, press enter directly')
+    PickAAnswer = input('Would you like to pick a word? If yes, just enter the word, if not, press enter directly ->')
     if len(PickAAnswer) == 0:
       break
     if len(PickAAnswer) > 0 and len(PickAAnswer)!=5:

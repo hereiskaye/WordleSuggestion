@@ -37,7 +37,7 @@ for word in english_words:
 length_5 = list(length_5)
 print('In total there are %d words' % (len(length_5)))
 
-from Interactive import GenerateQuestion, GradingSystem
+from Interactive import GenerateQuestion, GradingSystem, length_5
 
 print('In total there are %d words' % (len(length_5)))
 
@@ -61,10 +61,11 @@ for answer in length_5:
   if not guesses[-1] == answer:
     guesses.append(ob.found[0])
     results.append('GGGGG')
-  print('To find [%s] we %s' % (answer, '->'.join(guesses))) 
-  print('                   %s' % ('->'.join(results))) 
 
   steps.append(len(guesses)) # last one 
+  if len(guesses) > 6:
+    print('To find [%s] we %s' % (answer, '->'.join(guesses))) 
+    print('                   %s' % ('->'.join(results))) 
 
 
 fig, ax = plt.subplots()
